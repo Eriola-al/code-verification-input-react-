@@ -37,6 +37,7 @@ color: gray;
 text-align: center;
 }
 
-.input value {
-font-size: larger;
+input[type="text"] {
+font-size: 55px;
+text-align: center;
 }

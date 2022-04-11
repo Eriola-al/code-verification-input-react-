@@ -4,21 +4,23 @@ import './App.css';
 function App() {
   const [code, setCode] = useState(new Array(6).fill(""))
   
-  const handleChange = (element, index) => {
+  const handleFocus = (e, index) => {
 
-    setCode([...code.map((d,idx) => (idx === index) ? element.value : d)]);
+    if(isNaN(e.target.value)) return false;
 
-    if(element.nextSibling){
-      element.nextSibling.focus()
+    const updateCode = [...code];
+
+    if (e.target.value) {
+      updateCode[index] = e.target.value;
+      if (e.target.nextSibling) e.target.nextSibling.focus();
     }
-  }
-  
-//   const deleteHandler = (e) => {
-//     let key = e.keyCode || e.charCode;
-
-//     if( key === 'Backspace' || key === 'Delete' )
-//         setCode("");
-// };
+    if (e.target.value === "") {
+      updateCode[index] = "";
+      if (e.target.previousSibling)
+        e.target.previousSibling.focus();
+    }
+    setCode(updateCode);
+  };
 
   return (
     <div className="card">
@@ -35,9 +37,7 @@ function App() {
       key={index}
       value={data}
       placeholder={["0"-"0"-"0"-"0"-"0"-"0"]}
-      onChange={e => handleChange(e.target,index)}
-      onFocus={e => e.target.select()}
-      // onDelete={deleteHandler}
+      onChange={(e) => handleFocus(e, index)}
       />
     }) }
     <div className='footer'>
